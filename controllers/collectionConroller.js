@@ -14,7 +14,6 @@ exports.addCollection = function (request, response){
     });
 };
 exports.getCollection = function(request, response){
-    response.set('content-type', 'application/json');
     const sql = "SELECT * FROM collections"
     let data = {rows: []}
     db.all(sql, [], (err, rows) =>{
@@ -38,7 +37,7 @@ exports.getByIdCollection = function(request, response){
     response.set('content-type', 'application/json');
     const sql = "SELECT * FROM collections WHERE id=?"
     db.all(sql, [request.query.id], (err, rows) =>{
-        let data = JSON.stringify(rows)
+        let data = JSON.stringify(rows[0])
         response.status(200);
         response.send(data)
     });

@@ -17,7 +17,7 @@ exports.addTestCase = function (request, response){
     response.set('content-type', 'application/json');
     let newId
     const sql = "INSERT INTO test_cases (case_id, FK_collection_id, name, description, test_data) VALUES (?, ?, ?, ?,? )"
-    db.run(sql, [request.body.case_id, request.body.FK_collection_id, request.body.name, request.body.description, request.body.test_data], function(err){
+    db.run(sql, [request.body.caseId, request.body.fkCollectionId, request.body.name, request.body.description, request.body.testData], function(err){
         if (err) throw err
         newId = this.lastID
         response.status(201);
