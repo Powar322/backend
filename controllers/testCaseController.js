@@ -43,7 +43,7 @@ exports.getByIdtestCase = function(request, response){
     response.set('content-type', 'application/json');
     const sql = "SELECT test_cases.id, test_cases.case_id as caseId, test_cases.FK_collection_id as colId, collections.name as colName,test_cases.name as testName, test_cases.description, test_cases.test_data as testData FROM test_cases LEFT JOIN collections ON test_cases.FK_collection_id = collections.id where test_cases.id = ?"
     db.all(sql, [request.query.id], (err, rows) =>{
-        let data = JSON.stringify(rows)
+        let data = JSON.stringify(rows[0])
         response.status(200);
         response.send(data)
     });
