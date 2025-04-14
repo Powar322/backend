@@ -13,34 +13,13 @@ exports.addCollection = function (request, response){
         response.send(content);
     });
 };
-exports.getCollection = function(request, response){
-    response.set('content-type', 'application/json');
-    const sql = "SELECT * FROM collections"
-    let data = {rows: []}
-    db.all(sql, [], (err, rows) =>{
-        rows.forEach(row => {
-            data.rows.push({id: row.id, name: row.name, description: row.description, project: row.project})
-        });
-        let content = JSON.stringify(data.rows);
-        response.send(content);
-    });
-};
+
 exports.deleteCollection = function(request, response){
     response.set('content-type', 'application/json');
     const sql = "DELETE FROM collections WHERE id=?"
     db.run(sql, [request.query.id], (err, rows) =>{
         response.status(200);
         response.send(`{"message": "row ${request.query.id} deleted"}`)
-    });
-};
-
-exports.getByIdCollection = function(request, response){
-    response.set('content-type', 'application/json');
-    const sql = "SELECT * FROM collections WHERE id=?"
-    db.all(sql, [request.query.id], (err, rows) =>{
-        let data = JSON.stringify(rows)
-        response.status(200);
-        response.send(data)
     });
 };
 

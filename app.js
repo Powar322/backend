@@ -1,7 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 const app = express();
-const collectionRouter = require('./routes/collectionRouter.js')
+const testCaseCollectionRouter = require('./routes/testCaseCollectionRouter.js')
 const testCaseRouter = require('./routes/testCaseRouter.js')
 const bodyParser = require('body-parser')
 app.use(cors())
@@ -11,7 +11,7 @@ app.use(function (req, res, next) {
     next()
 });
 app.use(bodyParser.json())
-app.use("/collections", collectionRouter)
+app.use("/testCaseCollections", testCaseCollectionRouter)
 app.use("/testcases", testCaseRouter)
 
 
