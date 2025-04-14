@@ -1,14 +1,10 @@
 const express = require("express");
-const testCaseConroller = require("../controllers/testCaseController.js");
+const testCaseController = require("../controllers/testCasesController.js");
 const testCaseRouter = express.Router();
- 
-testCaseRouter.get("/get", testCaseConroller.getTestCase);
-testCaseRouter.post("/create", testCaseConroller.addTestCase);
-testCaseRouter.get("/getbyidcol", testCaseConroller.getByColTestCase)
-testCaseRouter.get("/getbyid", testCaseConroller.getByIdtestCase);
-testCaseRouter.post("/createteststep", testCaseConroller.createTestStep)
-testCaseRouter.get("/getstepsbyidtestcase", testCaseConroller.getStepsByIdtestCase)
-//testCaseRouter.delete("/delete", testCaseConroller.deleteTestCase)
-//testCaseRouter.get("/getbyid", testCaseConroller.getByIdTestCase)
+
+testCaseRouter.get("/", testCaseController.getTestCase)
+testCaseRouter.get("/:id", testCaseController.getTestCaseById)
+testCaseRouter.post("/", testCaseController.createTestCase)
+testCaseRouter.delete("/:id", testCaseController.deleteTestCase)
  
 module.exports = testCaseRouter;

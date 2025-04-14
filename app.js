@@ -3,6 +3,7 @@ const cors = require("cors")
 const app = express();
 const testCaseCollectionRouter = require('./routes/testCaseCollectionRouter.js')
 const testCaseRouter = require('./routes/testCaseRouter.js')
+const testCaseStepsRouter = require('./routes/testCaseStepRouter.js')
 const bodyParser = require('body-parser')
 app.use(cors())
 app.use(function (req, res, next) {
@@ -13,7 +14,7 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json())
 app.use("/testCaseCollections", testCaseCollectionRouter)
 app.use("/testcases", testCaseRouter)
-
+app.use("/steps", testCaseStepsRouter)
 
  
 app.listen(3000);
