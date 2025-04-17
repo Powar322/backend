@@ -49,7 +49,8 @@ exports.getTestCaseCollectionRunStatsById = (req, res) => {
         COUNT(*) AS total,
         SUM(CASE WHEN result = 1 THEN 1 ELSE 0 END) AS passed,
         SUM(CASE WHEN result = 2 THEN 1 ELSE 0 END) AS failed,
-        SUM(CASE WHEN result = 3 THEN 1 ELSE 0 END) AS inProgress
+        SUM(CASE WHEN result = 3 THEN 1 ELSE 0 END) AS inProgress,
+        SUM(CASE WHEN result = 4 THEN 1 ELSE 0 END) AS notDo
     FROM result_of_each_TC
     WHERE collection_run_id = ?
     `
@@ -62,9 +63,9 @@ exports.getTestCaseCollectionRunStatsById = (req, res) => {
 }
 
 exports.createTestCaseCollectionRuns = (req, res) => {
-    const {collectionId, resultId, dateOfRun} = req.body
-    let sql = 'INSERT INTO collections_runs ( collection_id, result, date_of_run) VALUES (?,?,?)'
-    const params = [collectionId, resultId, dateOfRun]
+    const {collectionId, dateOfRun} = req.body
+    let sql = 'INSERT INTO collections_runs ( collection_id, result, date_of_run) VALUES (?,3,?)'
+    const params = [collectionId, dateOfRun]
     db.run(sql, params, function (err, rows) {
         if (err){
             return res.status(500).json({error: err.message})

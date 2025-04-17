@@ -8,5 +8,4 @@ testCaseCollectionRunsRouter.get("/:id/stats", testCaseCollectionRunsController.
 testCaseCollectionRunsRouter.post("/", testCaseCollectionRunsController.createTestCaseCollectionRuns)
 testCaseCollectionRunsRouter.delete("/:id", testCaseCollectionRunsController.deleteTestCaseCollectionRunsById)
 testCaseCollectionRunsRouter.put("/:id", testCaseCollectionRunsController.updateTestCaseCollectionRunsById)
-
 module.exports = testCaseCollectionRunsRouter;
