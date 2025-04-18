@@ -53,6 +53,22 @@ exports.createTestCaseStep = (req, res) => {
     })
 }
 
+exports.updateTestCaseStep = (req, res) => {
+    const {id} = req.params
+    const { step } = req.body
+
+    const sql = `UPDATE test_case_steps SET step = ? WHERE id = ?`
+    db.run(sql, [step, id], function(err){
+        if (err){
+            return res.status(500).json({ error: err.message });
+        }
+        if (this.changes === 0 ){
+            return res.status(404).json({ error: 'Item not found' });
+        }
+        res.json({message: 'Item updated successfully'})
+    })
+}
+
 exports.deleteTestCaseStep = (req, res) => {
     const {id} = req.params
     let sql = 'DELETE FROM test_case_steps WHERE id = ?'
