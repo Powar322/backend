@@ -8,6 +8,7 @@ const testCaseCollectionRunsRouter = require('./routes/testCaseCollectionRunsRou
 const bodyParser = require('body-parser')
 const testCaseCollectionRunsResultsRouter = require("./routes/testCaseCollectionRunsResultsRouter.js");
 const testCaseAttachmentRouter = require("./routes/testCaseAttachmentsRouter.js")
+const testCaseCommentsRouter = require("./routes/testCaseComments.js")
 app.use(cors())
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
@@ -21,6 +22,7 @@ app.use("/steps", testCaseStepsRouter)
 app.use("/collectionRuns", testCaseCollectionRunsRouter)
 app.use("/collectionRunsResult", testCaseCollectionRunsResultsRouter);
 app.use("/testcaseattachments", testCaseAttachmentRouter)
+app.use("/testcasecomments", testCaseCommentsRouter)
 
  
 app.listen(3000);

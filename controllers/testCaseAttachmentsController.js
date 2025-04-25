@@ -6,14 +6,14 @@ exports.uploadAttachment = (req, res) => {
         return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const { test_case_id, is_img } = req.body;
-    const fileBuffer = req.file.buffer;
+    const { testCaseId, isImg } = req.body;
+    const file = req.file.buffer;
 
     db.run(
         `INSERT INTO attachments_for_test_cases 
      (test_case_id, file, is_img) 
      VALUES (?, ?, ?)`,
-        [test_case_id, fileBuffer, is_img || 0],
+        [testCaseId, file, isImg || 0],
         function(err) {
             if (err) {
                 return res.status(500).json({
@@ -24,9 +24,9 @@ exports.uploadAttachment = (req, res) => {
 
             res.status(201).json({
                 id: this.lastID,
-                test_case_id,
-                is_img,
-                file_size: fileBuffer.length,
+                testCaseId,
+                isImg,
+                file_size: file.length,
                 mimetype: req.file.mimetype
             });
         }
@@ -75,12 +75,12 @@ exports.downloadAttachment = (req, res) => {
 
 exports.getAttachmentsByTestCaseId = async (req, res) => {
     try {
-        const { testCaseId } = req.params;
+        const { testCaseId } = req.query;
 
         // Вариант 1: Если test_case_id в БД INTEGER
         const rows = await new Promise((resolve, reject) => {
             db.all(
-                `SELECT id, test_case_id, is_img 
+                `SELECT id, test_case_id AS testCaseId, is_img AS isImg 
                  FROM attachments_for_test_cases 
                  WHERE test_case_id = ?`,
                 [parseInt(testCaseId)],
@@ -99,7 +99,7 @@ exports.getAttachmentsByTestCaseId = async (req, res) => {
             count: rows.length,
             attachments: rows.map(row => ({
                 ...row,
-                url: `/api/attachments/${row.id}/file`
+                url: `http://localhost:3000/testcaseattachments/${row.id}/download`
             }))
         });
     } catch (error) {
