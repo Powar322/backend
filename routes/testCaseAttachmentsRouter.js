@@ -3,7 +3,7 @@ const upload = require('../upload');
 const testCaseAttachmentsController = require("../controllers/testCaseAttachmentsController.js");
 const testCaseAttachmentsRouter = express.Router();
 
-//testCaseAttachmentsRouter.get("/", testCaseAttachmentsController.)
+testCaseAttachmentsRouter.get("/", testCaseAttachmentsController.getAttachmentsByTestCaseId)
 testCaseAttachmentsRouter.get("/:id", testCaseAttachmentsController.getAttachmentInfo)
 testCaseAttachmentsRouter.post('/', upload.single('file'), testCaseAttachmentsController.uploadAttachment)
 testCaseAttachmentsRouter.get('/:id/download', testCaseAttachmentsController.downloadAttachment)

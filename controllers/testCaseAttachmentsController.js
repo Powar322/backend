@@ -73,6 +73,43 @@ exports.downloadAttachment = (req, res) => {
     );
 };
 
+exports.getAttachmentsByTestCaseId = async (req, res) => {
+    try {
+        const { testCaseId } = req.params;
+
+        // Вариант 1: Если test_case_id в БД INTEGER
+        const rows = await new Promise((resolve, reject) => {
+            db.all(
+                `SELECT id, test_case_id, is_img 
+                 FROM attachments_for_test_cases 
+                 WHERE test_case_id = ?`,
+                [parseInt(testCaseId)],
+                (err, rows) => {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+
+        // Вариант 2: Если test_case_id в БД TEXT
+        // const rows = await new Promise(... [testCaseId] ...)
+
+        res.json({
+            success: true,
+            count: rows.length,
+            attachments: rows.map(row => ({
+                ...row,
+                url: `/api/attachments/${row.id}/file`
+            }))
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+};
 // Удаление вложения
 exports.deleteAttachment = (req, res) => {
     db.run(
